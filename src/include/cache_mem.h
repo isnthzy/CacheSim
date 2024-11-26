@@ -30,7 +30,9 @@ typedef struct CacheParameters{
 class Cache{
 private:
   cache_way_t cache_mem;
-  cache_parameters_t cache_params; //FIXME: 为param设置初始值
+  cache_parameters_t cache_params = { .way = 2 , .tag = 26 ,\
+    .index = 4 , .offset = 2, .lineWidth = 128 \
+  }; 
   int bank_size;
   int line_word_size;
   FILE *mtrace_fp;

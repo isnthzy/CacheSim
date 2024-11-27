@@ -47,7 +47,7 @@ public:
 
   void set_cache_params(cache_parameters_t params){
     cache_params = params;
-    cache_params.offset = 32 - cache_params.index - cache_params.tag;
+    cache_params.offset = ADDR_WIDTH - cache_params.index - cache_params.tag;
   }
   void set_mtrace_fp(char *mtrace_file){
     mtrace_fp = fopen(mtrace_file,"r");

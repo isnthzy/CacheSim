@@ -1,4 +1,5 @@
 BUILD_DIR = ./build
+-include config.mk
 $(shell mkdir -p $(BUILD_DIR))
 
 GCC = clang
@@ -13,7 +14,7 @@ build:
 	$(GCC) $(CXXFLAGS) $(CSRCS) -o $(BIN)
 
 run: build
-	$(BIN)
+	$(BIN) $(ARGS)
 
 clean:
 	rm -rf $(BUILD_DIR)

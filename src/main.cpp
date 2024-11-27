@@ -1,10 +1,18 @@
 #include <cstddef>
 #include <cstdio>
 #include <getopt.h>
+#include <cstdlib>
 #include "include/cache_mem.h"
 #include "include/util.h"
 
 Cache *global_cache;
+static cache_parameters_t cache_params = {
+  .way = 0,
+  .tag = 0,
+  .index = 0,
+  .lineWidth = 0,
+};
+static char *mtrace_file = NULL;
 /*NOTE:参数解析
 way -> w //way数量
 tag -> t //tag宽度
@@ -20,21 +28,14 @@ void init_mtrace(char *mtrace_file) {
   return;
 }
 
-
 static int parse_args(int argc, char *argv[]) {
-  cache_parameters_t cache_params = {
-    .way = 0,
-    .tag = 0,
-    .index = 0,
-    .lineWidth = 0,
-  };
-  char *mtrace_file = NULL;
   const struct option table[] = {
     {"way"      , required_argument, NULL, 'w'},
     {"tag"      , required_argument, NULL, 't'},
     {"index"    , required_argument, NULL, 'i'},
     {"line"     , required_argument, NULL, 'l'},
     {"mtrace"   , required_argument, NULL, 'm'},
+    {"help"     , no_argument      , NULL, 'h'},
     {0          , 0                , NULL, 0 },
   };
   int o;
@@ -53,16 +54,9 @@ static int parse_args(int argc, char *argv[]) {
         printf("\t-l,--line=width         set line width\n");
         printf("\t-m,--mtrace=FILE        read mtrace FILE to sim\n");
         printf("\n");
-        // exit_sim();
+        exit(0);
     }
   }
-  if(cache_params.way == 0   || cache_params.tag == 0 
-  || cache_params.index == 0 || cache_params.lineWidth == 0){
-    printf_red("no cache params,use default params to init cache");
-  }else{
-    global_cache->set_cache_params(cache_params);
-  }
-  init_mtrace(mtrace_file);
   return 0;
 }
 
@@ -70,6 +64,13 @@ static int parse_args(int argc, char *argv[]) {
 void init_sim(int argc, char* argv[]) {
   global_cache = new Cache;
   parse_args(argc,argv);
+  if(cache_params.way == 0   || cache_params.tag == 0 
+  || cache_params.index == 0 || cache_params.lineWidth == 0){
+    printf_red("no cache params,use default params to init cache");
+  }else{
+    global_cache->set_cache_params(cache_params);
+  }
+  init_mtrace(mtrace_file);
   global_cache->init_cache();
 
   return;

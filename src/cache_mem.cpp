@@ -19,10 +19,12 @@ void Cache::init_cache(){
 }
 
 void Cache::exit_cache(){
-  for(int i = 0; i < cache_params.way; i++){
-    delete [] cache_mem.way[i].bank;
+  if(cache_mem.way != NULL){
+    for(int i = 0; i < cache_params.way; i++){
+      delete [] cache_mem.way[i].bank;
+    }
+    delete [] cache_mem.way;
   }
-  delete [] cache_mem.way;
 }
 
 void Cache::access(addr_t addr){
@@ -55,6 +57,7 @@ void Cache::run_sim(uint64_t n){
   for(uint64_t i = 0; i < n; i++){
     if(fscanf(mtrace_fp,"pc:%x addr:%x %*s:%*x,len:%*d", &pc, &addr)==EOF){
       printf_green("sim end");
+      fclose(mtrace_fp);
       break;
     }
     mem_count++;

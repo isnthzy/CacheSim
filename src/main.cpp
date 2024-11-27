@@ -39,7 +39,7 @@ static int parse_args(int argc, char *argv[]) {
     {0          , 0                , NULL, 0 },
   };
   int o;
-  while ( (o = getopt_long(argc, argv, "-w:t:i:l:m:", table, NULL)) != -1) {
+  while ( (o = getopt_long(argc, argv, "-hw:t:i:l:m:", table, NULL)) != -1) {
     switch (o) {
       case 'w': sscanf(optarg, "%d", &cache_params.way);       break;
       case 't': sscanf(optarg, "%d", &cache_params.tag);       break;
@@ -47,7 +47,7 @@ static int parse_args(int argc, char *argv[]) {
       case 'l': sscanf(optarg, "%d", &cache_params.lineWidth); break;
       case 'm': mtrace_file = optarg;                                    break;
       default:
-        printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
+        printf("Usage: %s [OPTION...] trace [args]\n\n", argv[0]);
         printf("\t-w,--way=num            set way num\n");
         printf("\t-t,--tag=width          set tag width\n");
         printf("\t-i,--index=width        set index width\n");

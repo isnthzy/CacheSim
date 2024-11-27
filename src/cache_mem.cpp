@@ -53,10 +53,12 @@ void Cache::access(addr_t addr){
 
 void Cache::run_sim(uint64_t n){
   addr_t addr;
-  addr_t pc;
+  uint64_t line;
+  // addr_t pc;
   for(uint64_t i = 0; i < n; i++){
-    if(fscanf(mtrace_fp,"pc:%x addr:%x %*s:%*x,len:%*d", &pc, &addr)==EOF){
-      printf_green("sim end");
+    // if(fscanf(mtrace_fp,"pc:%x addr:%x %*s:%*x,len:%*d", &pc, &addr)==EOF){
+    if(fscanf(mtrace_fp,"[%ld] %x: %*[^\n]\n", &line, &addr)==EOF){
+      printf_green("sim end\n");
       fclose(mtrace_fp);
       break;
     }

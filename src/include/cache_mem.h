@@ -39,6 +39,7 @@ private:
   uint64_t hit_count; //命中的次数
   uint64_t mem_count; //访存的次数
   void access(addr_t addr);
+  bool scan_traces();
 public:
   void init_cache();
   void exit_cache();
@@ -52,7 +53,7 @@ public:
   void set_mtrace_fp(char *mtrace_file){
     mtrace_fp = fopen(mtrace_file,"r");
     if(mtrace_fp == NULL) panic("mtrace_file is NULL");
-    printf("The image is %s", mtrace_file);
+    printf("The file is %s\n", mtrace_file);
   }
 };
 

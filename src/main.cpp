@@ -10,7 +10,6 @@ static cache_parameters_t cache_params = {
   .way = 0,
   .tag = 0,
   .index = 0,
-  .lineWidth = 0,
 };
 static char *mtrace_file = NULL;
 /*NOTE:参数解析
@@ -44,7 +43,6 @@ static int parse_args(int argc, char *argv[]) {
       case 'w': sscanf(optarg, "%d", &cache_params.way);       break;
       case 't': sscanf(optarg, "%d", &cache_params.tag);       break;
       case 'i': sscanf(optarg, "%d", &cache_params.index);     break;
-      case 'l': sscanf(optarg, "%d", &cache_params.lineWidth); break;
       case 'm': mtrace_file = optarg;                                    break;
       default:
         printf("Usage: %s [OPTION...] trace [args]\n\n", argv[0]);
@@ -65,7 +63,7 @@ void init_sim(int argc, char* argv[]) {
   global_cache = new Cache;
   parse_args(argc,argv);
   if(cache_params.way == 0   || cache_params.tag == 0 
-  || cache_params.index == 0 || cache_params.lineWidth == 0){
+  || cache_params.index == 0){
     printf_red("no cache params,use default params to init cache");
   }else{
     global_cache->set_cache_params(cache_params);

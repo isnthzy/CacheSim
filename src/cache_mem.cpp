@@ -7,7 +7,6 @@
 
 void Cache::init_cache(){
   bank_size = 1<<cache_params.index;
-  line_word_size = cache_params.lineWidth/32;
   cache_mem.way = new cache_bank_t[cache_params.way];
   for(int i = 0; i < cache_params.way; i++){
     cache_mem.way[i].bank = new meta_data_t[bank_size];
@@ -70,9 +69,10 @@ void Cache::run_sim(uint64_t n){
 
 void Cache::display(){
   printf("cache pamrams:\n");
-  printf("tag:%d index:%d \
-way:%d linewidth:%d\n",cache_params.tag, cache_params.index
-                      ,cache_params.way, cache_params.lineWidth);
+  printf("tag:%d index:%d way:%d \n\
+line_width:%d line_word_num:%d\n",
+  cache_params.tag, cache_params.index, cache_params.way
+, cache_params.lineWidth, (cache_params.lineWidth/32));
   printf("hit count:%ld mem count:%ld\n",hit_count, mem_count);
   printf("hit rate:%.3f\n",(double)hit_count / mem_count);
 }

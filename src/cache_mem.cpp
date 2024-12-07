@@ -52,13 +52,18 @@ void Cache::access(addr_t addr){
 
 void Cache::run_sim(uint64_t n){
   addr_t addr;
-  uint64_t line;
+  const char* format_itrace = "[%*ld] %x: %*[^\n]\n";
+  const char* format_mtrace = "pc:%*x addr:%x %*[^\n]\n";
+  const char* fromat_trace  = format_itrace;
+  if(trace_type == TYPE_ITRACE) fromat_trace = format_itrace;
+  else if (trace_type == TYPE_MTRACE) fromat_trace = format_mtrace;
+
   // addr_t pc;
   for(uint64_t i = 0; i < n; i++){
     // if(fscanf(mtrace_fp,"pc:%x addr:%x %*s:%*x,len:%*d", &pc, &addr)==EOF){
-    if(fscanf(mtrace_fp,"[%ld] %x: %*[^\n]\n", &line, &addr)==EOF){
+    if(fscanf(trace_fp,fromat_trace, &addr)==EOF){
       printf_green("sim end\n");
-      fclose(mtrace_fp);
+      fclose(trace_fp);
       break;
     }
     mem_count++;

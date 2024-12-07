@@ -14,7 +14,7 @@ build:
 	$(GCC) $(CXXFLAGS) $(CSRCS) -o $(BIN)
 
 run: build
-	$(BIN) $(ARGS) --mtrace=$(TRACE)
+	$(BIN) $(ARGS) --trace=$(TRACE)
 
 clean:
 	rm -rf $(BUILD_DIR)

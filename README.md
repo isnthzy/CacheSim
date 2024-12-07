@@ -1,1 +1,3 @@
 # CacheSim
+
+CacheSim通过文件名来判断是itrace还是mtrace,然后读取文件进行sim

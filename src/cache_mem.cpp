@@ -73,6 +73,9 @@ void Cache::run_sim(uint64_t n){
 }
 
 void Cache::display(){
+  printf("Sim type is %s\n",
+    (trace_type == TYPE_ITRACE ? ANSI_FMT("ICache", ANSI_FG_RED) :
+                                 ANSI_FMT("DCache", ANSI_FG_RED)));                      
   printf("cache pamrams:\n");
   printf("tag:%d index:%d way:%d \n\
 line_width:%d line_word_num:%d\n",
